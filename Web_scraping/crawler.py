@@ -13,16 +13,21 @@ class OpenDeltaCrawler(scrapy.Spider):
         yield scrapy.Request(url, headers=headers, callback = self.parse_blog)
 
     def parse_blog(self,response):
+        # print("excuted")
         # Go to the blocks that contain blog posts
-        blog_posts = response.css('row m1000')
+        blog_posts = response.xpath('//h3[contains(@class,"title list-title m0005")]')
+        print(blog_posts)
         # Go to the blog links
         blog_links = blog_posts.xpath('./a/@href')
+        print(blog_links)
         # Extract the links (as a list of strings)
         links_to_follow = blog_links.extract()
+        print(links_to_follow)
         # Follow the links in the next parser
-        headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+
 
         for url in links_to_follow:
+            headers = {'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'}
             yield response.follow(url=url,headers=headers, callback=self.parse_pages)
 
     def parse_pages(self, response):
