@@ -6,19 +6,14 @@ from scrapy.loader import ItemLoader
 from scrapy.crawler import CrawlerProcess
 
 class OpenDeltaCrawler(scrapy.Spider):
-    name = "forbeCrawler"
+    name = "openDeltaCrawler"
 
     def start_requests(self):
-        url = "https://www.forbes.com/sites/billybambrough/?sh=28b3aa666a89"
+        url = "https://www.moneyweb.co.za/moneyweb-crypto/"
         #headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
         yield scrapy.Request(url, callback = self.parse_blog)
 
     def parse_blog(self,response):
-
-        # look for more articles button
-        more_articles = response.css('').attrib['href']
-
-
         # Go to the blocks that contain blog posts
         blog_posts = response.xpath('//h3[contains(@class,"title list-title m0005")]')
         # Go to the blog links
@@ -26,11 +21,10 @@ class OpenDeltaCrawler(scrapy.Spider):
         print(blog_links)
         # Extract the links (as a list of strings)
         links_to_follow = blog_links.extract()
-
-        # look for more articles button
-        more_articles = response.css('').attrib['href']
-
+        print(links_to_follow)
         # Follow the links in the next parser
+
+
         for url in links_to_follow:
             #headers = {'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'}
             yield response.follow(url=url, callback=self.parse_pages)
