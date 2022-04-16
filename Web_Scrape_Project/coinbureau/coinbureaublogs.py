@@ -11,10 +11,12 @@ def get_data(url):
     return r
 def html_parse(data):
     soup = BeautifulSoup(data, 'html.parser')
-    article = soup.find('div',{'class':'article single__content'})
+    # article = soup.find('div',{'class':'article single__content'})
     #class ="article single__content"
-    text = article.find_all('p').text()
-    return text
+    text = soup.find_all('p')
+    text_list = [item.get_text().strip() for item in text]
+    return text_list
+
 def parse_data(dict):
     blog_dict = {}
     #what do I want
@@ -26,10 +28,11 @@ def parse_data(dict):
     blog_dict['blog_excerpt'] = dict['excerpt']['rendered']
     # html content
     # use beautifulSoup to parse this content?
-    # blog_dict['blog_content'] = html_parse(dict['content']['rendered'])
+    blog_dict['blog_content'] = html_parse(dict['content']['rendered'])
     # print(blog_dict['blog_content'])
     blog_dict['blog_url'] = dict['link']
     return blog_dict
+
 def output_csv(bloglist):
     blogs_df = pd.DataFrame(bloglist)
     blogs_df.to_csv('coinbureau.csv', index=False)
@@ -38,10 +41,12 @@ def output_csv(bloglist):
 
 # for item in get_data(url):
 #     print(item['title']['rendered'])
+
 # print(len(get_data(url)))
 # print(get_data(url))
 # blog_dict_test_list = [parse_data(item) for item in get_data(url)]
-# print(blog_dict_test_list)
+# for item in blog_dict_test_list:
+#     print(item['blog_content'])
 
 results = []
 for x in range(1,17):
