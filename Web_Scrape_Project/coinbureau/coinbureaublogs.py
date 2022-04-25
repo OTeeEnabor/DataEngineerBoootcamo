@@ -60,8 +60,4 @@ for x in range(1,17):
 output_csv(results)
 
 
-#      data = get_data(f"https://www.coinbureau.com/wp-json/wp/v2/posts/?_embed=true&page={x}&per_page=100&orderby=date&order=desc")
-#      print(parse_data(data))
-#      time.sleep(1.5)
 
-# output_csv(results)

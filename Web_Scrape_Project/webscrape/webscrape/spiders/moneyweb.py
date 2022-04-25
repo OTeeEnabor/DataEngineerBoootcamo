@@ -10,7 +10,6 @@ class OpenDeltaCrawler(scrapy.Spider):
 
     def start_requests(self):
         url = "https://www.moneyweb.co.za/moneyweb-crypto/"
-        #headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
         yield scrapy.Request(url, callback = self.parse_blog)
 
     def parse_blog(self,response):
@@ -38,27 +37,5 @@ class OpenDeltaCrawler(scrapy.Spider):
         i.add_xpath('blog_text','//p')
         i.add_value('blog_url',response.url)
         yield i.load_item()
-
-
-        # item = WebscrapeItem()
-        # # Direct to the blog title text
-        # blog_title = response.css('h1.article-headline::text')
-        # # Exctract and clean the blog title text
-        # blog_title_clean = blog_title.extract_first().strip()
-        # # Direct to the Exceprt
-        # blog_excerpt = response.css('div.article-excerpt::text')
-        # # Extract and clean the blog exceprt
-        # blog_excerpt_clean = blog_excerpt.extract_first().strip()
-        # # Direct to Blog Author
-        # blog_author = response.xpath('//div[@class="article-meta grey-text"]/span[1]/span/text()')
-        # # Extract and clean the author
-        # blog_author_clean = blog_author.extract_first().strip()
-        # # Direct to publish
-        # blog_publish_date = response.xpath('text()')
-        # # Extract and clean the publish date
-        # blog_publish_date_clean = blog_publish_date.extract_first().strip()
-        # print(blog_publish_date_clean)
-        # print(blog_author_clean)
-        # # code to parse blog posts
 
 

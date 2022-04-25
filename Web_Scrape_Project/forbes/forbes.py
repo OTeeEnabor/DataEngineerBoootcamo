@@ -29,7 +29,7 @@ def html_parse(soup):
     blog_link_list = [item['href'] for item in blog_title]
     # get blog excerpt
     blog_excerpt = soup.find_all('div',{'class':'stream-item__description'})
-    blog_excerpt_list = [item.get_text() for item in blog_excerpt]
+    blog_excerpt_list = [item.get_text().strip() for item in blog_excerpt]
     # get blog publish date
     blog_date = soup.find_all('div',{'class':'stream-item__date'})
     blog_date_list = [item.get_text() for item in blog_date]
@@ -49,11 +49,7 @@ def html_parse(soup):
         blog_dict_list.append(blog_dict)
 
     return blog_dict_list
-    # print(len(blog_title_list))
-    # print(len(blog_link_list))
-    # print(len(blog_excerpt_list))
-    # print(len(blog_date_list))
-    # print(len(blog_views_list))
+
 def parse_data(dict):
     blog_dict = {}
     # blog title, author, exceprt, publish date, blog url
@@ -67,6 +63,7 @@ def parse_data(dict):
 
 def output_csv(bloglist):
     blogs_df = pd.DataFrame(bloglist)
+    # change the name to reflect forbes
     blogs_df.to_csv('coinbureau.csv', index=False)
     print('Done. Saved to CSV')
     return
