@@ -14,7 +14,9 @@ def html_parse(data):
     # article = soup.find('div',{'class':'article single__content'})
     #class ="article single__content"
     text = soup.find_all('p')
-    text_list = [item.get_text().strip() for item in text]
+    remove_anchor = [i.decompose('a') for i in text]
+    text_list = [item.get_text().strip() for item in remove_anchor]
+    print(text_list)
     return text_list
 
 def parse_data(dict):

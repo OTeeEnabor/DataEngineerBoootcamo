@@ -57,13 +57,8 @@ blog_exceprt = driver.find_elements(By.CLASS_NAME,'stream-item__description')
 blog_exceprt_list =[elem.text.strip() for elem in blog_exceprt]
 # Get all Links to
 blog_links_list = [blog_title.get_attribute('href') for blog_title in blog_titles]
+#use beautiful soup to parse through the links
 author = driver.title
-
-# print(len(blog_titles_list))
-# print(len(blog_links_list))
-# print(len(blog_publish_date_list))
-# print(len(blog_views_list))
-# print(len(blog_exceprt_list))
 
 output_dict_list = []
 
